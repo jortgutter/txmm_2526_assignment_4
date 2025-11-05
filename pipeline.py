@@ -13,7 +13,7 @@ def train_and_test_all(
 ):# dictionary with the selected model types and their optional arguments:
 
     n_models=len(model_dict)
-    fig, axs = plt.subplots(n_models,1, figsize=(12,3*n_models))
+    fig, axs = plt.subplots(n_models,1, figsize=(12,5*n_models))
     
     print(f'Training and testing {n_models} models')
     # perform an ablation test on each type of model

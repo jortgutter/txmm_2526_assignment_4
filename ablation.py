@@ -74,12 +74,22 @@ def ablation_test(
                 colors.append(f'C{i+1}')
                 alphas.append(0.5)
         
-    
-    bars = ax.bar(scores.keys(), scores.values())
+    bar_labels = []
+    score_keys = []
+    score_values = []
+    for key, val in scores.items():
+        score_keys.append(key)
+        score_values.append(val)
+    bars = ax.bar(score_keys, score_values)
     for i, bar in enumerate(bars):
         bar.set_color(colors[i])
         bar.set_alpha(alphas[i])
-    #bars[0].set_color('C1')
+       
+        if alphas[i] == 1: 
+            bar_labels.append(f'{score_values[i]:.2f}')
+        else:
+            bar_labels.append('')
+        
     if is_last:
         for i, label in enumerate(ax.get_xticklabels()):
             label.set_rotation(45)
@@ -89,6 +99,8 @@ def ablation_test(
         ax.set_xlabel('Ablated feature')
     else:
         ax.set_xticks([])
+        
+    ax.bar_label(bars, labels=bar_labels, padding=3)
     ax.set_ylabel('F1-score')
-    
+    ax.set_ylim(0, 1)
     ax.set_title(f'{model_class.__name__}')
